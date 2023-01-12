@@ -1,0 +1,35 @@
+g = 9.8;
+t = 10;
+v = 40;
+m =68.1;
+f = @(x) (m.*(g./x).*(1-exp((-x.*t)./m)) - v); 
+x_l = 1; 
+x_u = 50; 
+if f(x_l)*f(x_u) > 0
+    fprintf('There is no solution in the given interval'); 
+    return
+elseif f(x_l) == 0
+    fprintf('%f is the solution',x_l); 
+elseif f(x_u) == 0
+    fprintf('%f is the solution', x_u); 
+end
+fprintf('i     xl    xu      xm\n'); 
+for i = 1:1000 
+    
+    xm = x_u - (x_l-x_u)*f(x_u)/(f(x_l)-f(x_u)); 
+    
+    fprintf('%i %f %f %f\n',i,x_l,x_u,xm) 
+    
+    if abs(f(xm)) < 0.0001 
+        
+        return
+    end
+ if f(x_l)*f(xm) < 0
+     x_u = xm;
+     
+ elseif f(x_u)*f(xm) < 0
+     x_l = xm;
+ end 
+     
+end
+

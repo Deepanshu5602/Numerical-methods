@@ -1,0 +1,32 @@
+x = [0 0.2 0.4 0.6 0.8 1.0 1.2 1.4 1.6 1.8 2.0];
+y = [7.18 4.26 2.22 0.92 0.21 0 0.19 0.70 1.49 2.49 3.68];
+n = 11 ; % number of data point'
+
+k = newton_interpolation(x,y,1.9)
+
+function fp = newton_interpolation(x,y,p)
+
+% x and y are two Row Matrices and p is point of interpolation
+
+n = length(x);
+a(1) = y(1);
+for k = 1 : n - 1
+   d(k, 1) = (y(k+1) - y(k))/(x(k+1) - x(k));
+end
+for j = 2 : n - 1
+   for k = 1 : n - j
+      d(k, j) = (d(k+1, j - 1) - d(k, j - 1))/(x(k+j) - x(k));
+   end
+end
+
+for j = 2 : n
+   a(j) = d(1, j-1);
+end
+Df(1) = 1;
+c(1) = a(1);
+for j = 2 : n
+   Df(j)=(p - x(j-1)) .* Df(j-1);
+   c(j) = a(j) .* Df(j);
+end
+fp=sum(c);
+end

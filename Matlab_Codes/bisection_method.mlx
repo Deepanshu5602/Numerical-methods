@@ -1,0 +1,33 @@
+% Script file to use Bisection method
+% To solve 2 x + log(x) = 0
+%% Initial Guesses
+xl= 1;
+xu = 4;
+
+fl= 2-xl+log(xl);
+fu = 2-xu+log(xu);
+
+% Check if signs of fl and fu are different
+if (fl*fu > 0)
+    error('Initial guesses should have different signs');
+end
+% Iterative solution using bisection rule
+maxIter = 50;
+for i = 1: maxIter
+    err = abs(xl-xu)
+    xNew = (xl+xu) /2;
+    fNew = 2-xNew+log(xNew);
+    if(fl*fNew > 0)
+        xl = xNew;
+        fl = fNew;
+    else
+        xu = xNew;
+        fu = fNew;
+ 
+    end
+    if abs(xl-xu)<1.0e-4
+        break
+    end
+
+end
+

@@ -1,0 +1,34 @@
+% To solve sequence of nonlinear equations using Newton Raphson
+%% Initial conditions
+X0 = [-1; -1; 0 ];
+    maxIter = 50;
+    tolx = 1e-6;
+    %% Computation using Newton Raphson
+    X = X0;
+    Xold = X0;
+    for i= 1:maxIter
+    [f,j] = Lornez_NR(X);
+    X = X-inv(j)*f;
+    err(:,i) = abs(X-Xold);
+    Xold = X;
+    if (err(:,i)<tolx)
+        break;
+    end
+    end
+    X
+
+    function [fval,jac] = Lornez_NR(X)
+% Define three variables
+x = X(1);
+y = X(2);
+z = X(3);
+% Define f(x)
+fval(1,1)=x-y;
+fval(2,1)=2*x-x*z-y;
+fval(3,1)=x*y-3*z;
+% Define jacobian
+jac = [1, -1, 0;
+    2-z, -1, -x;
+    y, x, -3];
+
+end

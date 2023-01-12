@@ -1,0 +1,23 @@
+% To solve nonlinear equations using Fixed Point iteration
+% Case-1: g(x) -> 2+ln(x)
+% Case-2: g(x) -> exp(x-2)
+
+
+
+% Initial Conditions
+x0 =-4;
+maxIter=50;
+tolX=1e-4;
+
+% Computation using Fixed Point Iteration
+x=x0;
+xold=x0;
+for i=1:maxIter
+    x= 1/(x+1)
+    err=abs(x-xold)
+    xold=x;
+    if(err<tolX)
+        break;
+    end
+end
+x1=2+ log(x0);
